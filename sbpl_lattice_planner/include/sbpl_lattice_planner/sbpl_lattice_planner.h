@@ -18,11 +18,12 @@ using namespace std;
 #include <sbpl/headers.h>
 
 // global representation
+// 修改為使用 my_nav_core 以兼容 my_move_base
 #include <nav_core/base_global_planner.h>
 
 namespace sbpl_lattice_planner{
 
-class SBPLLatticePlanner : public nav_core::BaseGlobalPlanner{
+class SBPLLatticePlanner : public my_nav_core::BaseGlobalPlanner{
 public:
   
   /**

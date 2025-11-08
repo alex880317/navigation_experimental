@@ -17,7 +17,7 @@
   
   <depend>costmap_2d</depend>
   <depend>geometry_msgs</depend>
-  <depend>nav_core</depend>
+  <depend>my_nav_core</depend>
   <depend>nav_msgs</depend>
   <depend>pluginlib</depend>
   <depend>roscpp</depend>
@@ -29,6 +29,6 @@
   <exec_depend>message_runtime</exec_depend>
 
   <export>
-    <nav_core plugin="${prefix}/bgp_plugin.xml" />
+    <my_nav_core plugin="${prefix}/bgp_plugin.xml" />
   </export>
 </package>

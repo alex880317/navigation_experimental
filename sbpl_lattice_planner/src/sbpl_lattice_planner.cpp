@@ -43,12 +43,13 @@
 #include <costmap_2d/inflation_layer.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf/transform_datatypes.h>
+#include <fstream>
 
 using namespace std;
 using namespace ros;
 
 
-PLUGINLIB_EXPORT_CLASS(sbpl_lattice_planner::SBPLLatticePlanner, nav_core::BaseGlobalPlanner)
+PLUGINLIB_EXPORT_CLASS(sbpl_lattice_planner::SBPLLatticePlanner, my_nav_core::BaseGlobalPlanner)
 
 namespace geometry_msgs {
   bool operator== (const Point &p1, const Point &p2)
@@ -107,6 +108,18 @@ void SBPLLatticePlanner::initialize(std::string name, costmap_2d::Costmap2DROS* 
     private_nh.param("environment_type", environment_type_, string("XYThetaLattice"));
     private_nh.param("forward_search", forward_search_, bool(false));
     private_nh.param("primitive_filename",primitive_filename_,string(""));
+    ROS_INFO("Motion primitive filename: %s", primitive_filename_.c_str());
+    if(primitive_filename_.empty()){
+      ROS_ERROR("primitive_filename parameter is empty! Please set it in the launch file.");
+      exit(1);
+    }
+    // 檢查文件是否存在
+    std::ifstream test_file(primitive_filename_.c_str());
+    if(!test_file.good()){
+      ROS_ERROR("Cannot open motion primitive file: %s", primitive_filename_.c_str());
+      exit(1);
+    }
+    test_file.close();
     private_nh.param("force_scratch_limit",force_scratch_limit_,500);
 
     double nominalvel_mpersecs, timetoturn45degsinplace_secs;
@@ -171,6 +184,9 @@ void SBPLLatticePlanner::initialize(std::string name, costmap_2d::Costmap2DROS* 
     }
 
     bool ret;
+    double costmap_resolution = costmap_ros_->getCostmap()->getResolution();
+    ROS_INFO("Costmap resolution: %f m, Motion primitive file: %s", costmap_resolution, primitive_filename_.c_str());
+    ROS_INFO("Note: Motion primitive file resolution must match costmap resolution!");
     try{
       ret = env_->InitializeEnv(costmap_ros_->getCostmap()->getSizeInCellsX(), // width
                                 costmap_ros_->getCostmap()->getSizeInCellsY(), // height
@@ -178,7 +194,7 @@ void SBPLLatticePlanner::initialize(std::string name, costmap_2d::Costmap2DROS* 
                                 0, 0, 0, // start (x, y, theta, t)
                                 0, 0, 0, // goal (x, y, theta)
                                 0, 0, 0, //goal tolerance
-                                perimeterptsV, costmap_ros_->getCostmap()->getResolution(), nominalvel_mpersecs,
+                                perimeterptsV, costmap_resolution, nominalvel_mpersecs,
                                 timetoturn45degsinplace_secs, obst_cost_thresh,
                                 primitive_filename_.c_str());
       current_env_width_ = costmap_ros_->getCostmap()->getSizeInCellsX();

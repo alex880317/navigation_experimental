@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
 cmake_policy(SET CMP0048 NEW)
 project(pose_follower)
-set(pose_follower_ROS_DEPS nav_core base_local_planner costmap_2d roscpp tf2_geometry_msgs tf2_ros nav_msgs pluginlib dynamic_reconfigure)
+set(pose_follower_ROS_DEPS my_nav_core my_base_local_planner costmap_2d roscpp tf2_geometry_msgs tf2_ros nav_msgs pluginlib dynamic_reconfigure)
 
 find_package(catkin REQUIRED COMPONENTS ${pose_follower_ROS_DEPS})
 

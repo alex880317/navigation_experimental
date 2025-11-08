@@ -6,7 +6,7 @@ project(sbpl_recovery)
 # Find dependencies
 ##############################################################################
 
-set(THIS_PACKAGE_ROS_DEPS roscpp nav_core sbpl_lattice_planner pose_follower
+set(THIS_PACKAGE_ROS_DEPS roscpp my_nav_core sbpl_lattice_planner pose_follower
   costmap_2d pluginlib base_local_planner tf2_ros)
 find_package(catkin REQUIRED COMPONENTS ${THIS_PACKAGE_ROS_DEPS})
 

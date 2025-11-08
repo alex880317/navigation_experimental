@@ -42,6 +42,8 @@
 #include <tf2/utils.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/buffer.h>
+// 修改為使用 my_nav_core 以兼容 my_move_base
+// 使用本地的 my_base_local_planner，它已經使用 my_nav_core
 #include <nav_core/base_local_planner.h>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <geometry_msgs/Pose.h>
@@ -53,7 +55,7 @@
 #include <base_local_planner/trajectory_planner_ros.h>
 
 namespace pose_follower {
-  class PoseFollower : public nav_core::BaseLocalPlanner {
+  class PoseFollower : public my_nav_core::BaseLocalPlanner {
     public:
       PoseFollower();
       ~PoseFollower();

@@ -18,7 +18,7 @@
 
   <depend>base_local_planner</depend>
   <depend>costmap_2d</depend>
-  <depend>nav_core</depend>
+  <depend>my_nav_core</depend>
   <depend>pluginlib</depend>
   <depend>pose_follower</depend>
   <depend>roscpp</depend>
@@ -26,6 +26,6 @@
   <depend>tf2_ros</depend>
 
   <export>
-    <nav_core plugin="${prefix}/recovery_plugin.xml" />
+    <my_nav_core plugin="${prefix}/recovery_plugin.xml" />
   </export>
 </package>

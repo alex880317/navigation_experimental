@@ -38,6 +38,7 @@
 #define SBPL_RECOVERY_SBPL_RECOVERY_H_
 
 #include <ros/ros.h>
+// 修改為使用 my_nav_core 以兼容 my_move_base
 #include <nav_core/recovery_behavior.h>
 #include <costmap_2d/costmap_2d_ros.h>
 #include <pose_follower/pose_follower.h>
@@ -50,7 +51,7 @@
 
 namespace sbpl_recovery
 {
-  class SBPLRecovery : public nav_core::RecoveryBehavior
+  class SBPLRecovery : public my_nav_core::RecoveryBehavior
   {
     public:
       SBPLRecovery();

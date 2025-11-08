@@ -14,10 +14,10 @@
 
   <buildtool_depend>catkin</buildtool_depend>
   
-  <depend>base_local_planner</depend>
+  <depend>my_base_local_planner</depend>
   <depend>costmap_2d</depend>
   <depend>dynamic_reconfigure</depend>
-  <depend>nav_core</depend>
+  <depend>my_nav_core</depend>
   <depend>nav_msgs</depend>
   <depend>pluginlib</depend>
   <depend>roscpp</depend>
@@ -25,6 +25,6 @@
   <depend>tf2_ros</depend>
 
   <export>
-    <nav_core plugin="${prefix}/blp_plugin.xml" />
+    <my_nav_core plugin="${prefix}/blp_plugin.xml" />
   </export>
 </package>
