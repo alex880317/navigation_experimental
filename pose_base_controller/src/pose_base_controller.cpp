@@ -35,6 +35,7 @@
 * Author: Eitan Marder-Eppstein
 *********************************************************************/
 #include <pose_base_controller/pose_base_controller.h>
+#include <cstdint>
 
 namespace pose_base_controller {
 PoseBaseController::PoseBaseController() : tfl_(tf_),

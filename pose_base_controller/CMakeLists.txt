@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.5.1)
 cmake_policy(SET CMP0048 NEW)
 project(pose_base_controller)
 
+# Add -fsigned-char flag for ARM compatibility
+# Only apply on ARM architecture to avoid potential issues on x86/x64
+if(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char")
+endif()
+
 find_package(catkin REQUIRED COMPONENTS actionlib move_base_msgs nav_msgs roscpp tf2_geometry_msgs tf2_ros geometry_msgs)
 find_package(Boost COMPONENTS system filesystem thread REQUIRED)
 

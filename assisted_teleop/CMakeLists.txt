@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.5.1)
 cmake_policy(SET CMP0048 NEW)
 project(assisted_teleop)
 
+# Add -fsigned-char flag for ARM compatibility
+# Only apply on ARM architecture to avoid potential issues on x86/x64
+if(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char")
+endif()
+
 ##############################################################################
 # Find dependencies
 ##############################################################################

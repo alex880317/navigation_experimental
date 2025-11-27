@@ -35,6 +35,7 @@
 * Author: Eitan Marder-Eppstein
 *********************************************************************/
 #include <assisted_teleop/assisted_teleop.h>
+#include <cstdint>
 
 namespace assisted_teleop {
   AssistedTeleop::AssistedTeleop() : tfl_(tf_), costmap_ros_("costmap", tf_), planning_thread_(NULL){

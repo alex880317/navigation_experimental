@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.5.1)
 cmake_policy(SET CMP0048 NEW)
 project(pose_follower)
+
+# Add -fsigned-char flag for ARM compatibility
+# Only apply on ARM architecture to avoid potential issues on x86/x64
+if(CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_PROCESSOR MATCHES "arm|ARM|aarch64")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char")
+endif()
+
 set(pose_follower_ROS_DEPS my_nav_core my_base_local_planner costmap_2d roscpp tf2_geometry_msgs tf2_ros nav_msgs pluginlib dynamic_reconfigure)
 
 find_package(catkin REQUIRED COMPONENTS ${pose_follower_ROS_DEPS})
