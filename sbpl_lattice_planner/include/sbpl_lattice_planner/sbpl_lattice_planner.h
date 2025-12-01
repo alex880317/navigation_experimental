@@ -63,12 +63,12 @@ public:
   virtual ~SBPLLatticePlanner(){};
 
 private:
-  int8_t costMapCostToSBPLCost(int8_t newcost);
+  uint8_t costMapCostToSBPLCost(uint8_t newcost);
   void publishStats(int solution_cost, int solution_size, 
                     const geometry_msgs::PoseStamped& start, 
                     const geometry_msgs::PoseStamped& goal);
 
-  int8_t computeCircumscribedCost();
+  uint8_t computeCircumscribedCost();
 
   static void transformFootprintToEdges(const geometry_msgs::Pose& robot_pose,
                                         const std::vector<geometry_msgs::Point>& footprint,
@@ -94,10 +94,10 @@ private:
   std::string primitive_filename_; /** where to find the motion primitives for the current robot */
   int force_scratch_limit_; /** the number of cells that have to be changed in the costmap to force the planner to plan from scratch even if its an incremental planner */
 
-  int8_t lethal_obstacle_;
-  int8_t inscribed_inflated_obstacle_;
-  int8_t circumscribed_cost_;
-  int8_t sbpl_cost_multiplier_;
+  uint8_t lethal_obstacle_;
+  uint8_t inscribed_inflated_obstacle_;
+  uint8_t circumscribed_cost_;
+  uint8_t sbpl_cost_multiplier_;
 
   bool publish_footprint_path_;
   int visualizer_skip_poses_;

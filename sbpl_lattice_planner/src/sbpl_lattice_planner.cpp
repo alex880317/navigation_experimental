@@ -129,9 +129,9 @@ void SBPLLatticePlanner::initialize(std::string name, costmap_2d::Costmap2DROS* 
 
     int lethal_obstacle;
     private_nh.param("lethal_obstacle",lethal_obstacle,20);
-    lethal_obstacle_ = (int8_t) lethal_obstacle;
+    lethal_obstacle_ = (uint8_t) lethal_obstacle;
     inscribed_inflated_obstacle_ = lethal_obstacle_-1;
-    sbpl_cost_multiplier_ = (int8_t) (costmap_2d::INSCRIBED_INFLATED_OBSTACLE/inscribed_inflated_obstacle_ + 1);
+    sbpl_cost_multiplier_ = (uint8_t) (costmap_2d::INSCRIBED_INFLATED_OBSTACLE/inscribed_inflated_obstacle_ + 1);
     ROS_DEBUG("SBPL: lethal: %uz, inscribed inflated: %uz, multiplier: %uz",lethal_obstacle,inscribed_inflated_obstacle_,sbpl_cost_multiplier_);
 
     private_nh.param("publish_footprint_path", publish_footprint_path_, bool(true));
@@ -237,7 +237,7 @@ void SBPLLatticePlanner::initialize(std::string name, costmap_2d::Costmap2DROS* 
   
 //Taken from Sachin's sbpl_cart_planner
 //This rescales the costmap according to a rosparam which sets the obstacle cost
-int8_t SBPLLatticePlanner::costMapCostToSBPLCost(int8_t newcost){
+uint8_t SBPLLatticePlanner::costMapCostToSBPLCost(uint8_t newcost){
   if(newcost == costmap_2d::LETHAL_OBSTACLE || (!allow_unknown_ && newcost == costmap_2d::NO_INFORMATION))
     return lethal_obstacle_;
   else if(newcost == costmap_2d::INSCRIBED_INFLATED_OBSTACLE)
@@ -245,7 +245,7 @@ int8_t SBPLLatticePlanner::costMapCostToSBPLCost(int8_t newcost){
   else if(newcost == 0 || newcost == costmap_2d::NO_INFORMATION)
     return 0;
   else {
-    int8_t sbpl_cost = newcost / sbpl_cost_multiplier_;
+    uint8_t sbpl_cost = newcost / sbpl_cost_multiplier_;
     if (sbpl_cost == 0)
       sbpl_cost = 1;
     return sbpl_cost;
@@ -274,8 +274,8 @@ void SBPLLatticePlanner::publishStats(int solution_cost, int solution_size,
   stats_publisher_.publish(stats);
 }
 
-int8_t SBPLLatticePlanner::computeCircumscribedCost() {
-  int8_t result = 0;
+uint8_t SBPLLatticePlanner::computeCircumscribedCost() {
+  uint8_t result = 0;
 
   if (!costmap_ros_) {
     ROS_ERROR("Costmap is not initialized");
@@ -367,8 +367,8 @@ bool SBPLLatticePlanner::makePlan(const geometry_msgs::PoseStamped& start,
   for(unsigned int ix = 0; ix < costmap_ros_->getCostmap()->getSizeInCellsX(); ix++) {
     for(unsigned int iy = 0; iy < costmap_ros_->getCostmap()->getSizeInCellsY(); iy++) {
 
-      int8_t oldCost = env_->GetMapCost(ix,iy);
-      int8_t newCost = costMapCostToSBPLCost(costmap_ros_->getCostmap()->getCost(ix,iy));
+      uint8_t oldCost = env_->GetMapCost(ix,iy);
+      uint8_t newCost = costMapCostToSBPLCost(costmap_ros_->getCostmap()->getCost(ix,iy));
 
       if(oldCost == newCost) continue;
 
